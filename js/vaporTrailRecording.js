@@ -5,54 +5,53 @@ function init() {
     // > npm install -g http-server
     // my-project> http-server
     // https://stackoverflow.com/questions/18586921/how-to-launch-html-using-chrome-at-allow-file-access-from-files-mode
-    
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 3000);
 
-    var renderer = new THREE.WebGLRenderer({ antialias: true });
+    let  scene = new THREE.Scene();
+    let  camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 3000);
+    let  renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
     //LIGHTS
-    var light = new THREE.AmbientLight(0x404040, 1);
+    let  light = new THREE.AmbientLight(0x404040, 1);
     scene.add(light);
 
-    var light1 = new THREE.PointLight(0xE0E4CC, 1, 0, 2);
+    let  light1 = new THREE.PointLight(0xE0E4CC, 1, 0, 2);
     light1.position.set(0, 0, 500);
     scene.add(light1);
 
-    var frames = 10;
-    var boxes = [];
+    let  frames = 10;
+    let  boxes = [];
 
-    var cubeGeometry = new THREE.CubeGeometry(150, 150, 150);
-    var cubeMaterial = new THREE.MeshLambertMaterial({ color: 0x69D2E7 });
-    var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-    var boxGeometry = new THREE.EdgesGeometry(cubeGeometry);
-    var magnification = 2;
+    let  cubeGeometry = new THREE.CubeGeometry(150, 150, 150);
+    let  cubeMaterial = new THREE.MeshLambertMaterial({ color: 0x69D2E7 });
+    let  cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+    let  boxGeometry = new THREE.EdgesGeometry(cubeGeometry);
+    let  magnification = 2;
 
-    var colors = chroma.scale(['#fafa6e', '#2A4858', '#000000'])
+    let  colors = chroma.scale(['#fafa6e', '#2A4858', '#000000'])
         .mode('lch').colors(frames)
 
-    for (var i = 0; i < frames; i++) {
-        var lineMaterial = new THREE.LineBasicMaterial({ color: colors[i], linewidth: 2 });
-        var box = new THREE.LineSegments(boxGeometry, lineMaterial);
+    for (let  i = 0; i < frames; i++) {
+        let  lineMaterial = new THREE.LineBasicMaterial({ color: colors[i], linewidth: 2 });
+        let  box = new THREE.LineSegments(boxGeometry, lineMaterial);
         scene.add(box);
 
         boxes[i] = box;
     }
 
     camera.position.z = 500;
-    var counter = 0;
-    var xDirection = -1;
-    var xRotDiff;
-    var countdown = 0;
-    var delay = 15;
-    var delayCounter = delay;
+    let  counter = 0;
+    let  xDirection = -1;
+    let  xRotDiff;
+    let  countdown = 0;
+    let  delay = 15;
+    let  delayCounter = delay;
 
-    // var capturer = new CCapture({ format: 'webm', framerate: 50 });
-    var capturer = new CCapture( { format: 'gif', workersPath: 'js/' } );
+    // let  capturer = new CCapture({ format: 'webm', framerate: 50 });
+    let  capturer = new CCapture( { format: 'gif', workersPath: 'js/' } );
     capturer.start();
-    var downs = 0;
+    let  downs = 0;
 
     function animate() {
         if (downs < 1) {
@@ -61,7 +60,7 @@ function init() {
             capturer.stop();
             capturer.save();
         }
-        for (var i = 0; i < frames; i++) {
+        for (let  i = 0; i < frames; i++) {
             box = boxes[i];
             box.rotation.x += Math.sin((counter + i) / 120) / 90;
             box.rotation.y += Math.sin((counter + i) / 175) / 45;
