@@ -26,7 +26,7 @@ function init() {
     let  cubeGeometry = new THREE.CubeGeometry(150, 150, 150);
     let  boxGeometry = new THREE.EdgesGeometry(cubeGeometry);
 
-    let  colors = chroma.scale(['#fafa6e', '#2A4858', '#000000'])
+    let  colors = chroma.scale([ '#000000','#2A4858','#fafa6e' ])  // lead with the brightest colors
         .mode('lch').colors(frames)
 
     for (let  i = 0; i < frames; i++) {
@@ -42,19 +42,19 @@ function init() {
     let  xDirection = -1;
     let  xRotDiff;
     let  countdown = 0;
-    let  delay = 15;
-    let  delayCounter = delay;
+    let  DELAY_INITIAL = 15;
+    let  delayCounter = DELAY_INITIAL;
 
-    let  capturer = new CCapture( { format: 'gif', workersPath: 'js/' } );
-    capturer.start();
+//    let  capturer = new CCapture( { format: 'gif', workersPath: 'js/' } );
+//    capturer.start();
     let  downs = 0;
 
     function animate() {
         if (downs < 1) {
             requestAnimationFrame(animate);
         } else {
-            capturer.stop();
-            capturer.save();
+            // capturer.stop();
+            // capturer.save();
         }
         for (let  i = 0; i < frames; i++) {
             box = boxes[i];
@@ -65,20 +65,9 @@ function init() {
 
         xRotDiff = boxes[0].rotation.x - boxes[frames - 1].rotation.x;
 
-        if (xDirection == -1 && xRotDiff > 0) {
-            xDirection = 1;
-            console.log("xUp");
-            countdown = frames - 1;
-        } else if (xDirection == 1 && xRotDiff < 0) {
-            xDirection = -1;
-            console.log("xDown");
-            countdown = frames - 1;
-            downs++;
-        }
-
         delayCounter--;
         if (countdown > 0 && delayCounter == 0) {
-            delayCounter = delay;
+            delayCounter = DELAY_INITIAL;
 
             if (xDirection == 1) {
                 box = boxes[countdown];
@@ -94,7 +83,7 @@ function init() {
         counter++;
 
         renderer.render(scene, camera);
-        capturer.capture(renderer.domElement);
+//        capturer.capture(renderer.domElement);
     }
 
     animate();
