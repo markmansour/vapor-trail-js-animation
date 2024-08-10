@@ -24,10 +24,7 @@ function init() {
     let  boxes = [];
 
     let  cubeGeometry = new THREE.CubeGeometry(150, 150, 150);
-    let  cubeMaterial = new THREE.MeshLambertMaterial({ color: 0x69D2E7 });
-    let  cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
     let  boxGeometry = new THREE.EdgesGeometry(cubeGeometry);
-    let  magnification = 2;
 
     let  colors = chroma.scale(['#fafa6e', '#2A4858', '#000000'])
         .mode('lch').colors(frames)
@@ -48,7 +45,6 @@ function init() {
     let  delay = 15;
     let  delayCounter = delay;
 
-    // let  capturer = new CCapture({ format: 'webm', framerate: 50 });
     let  capturer = new CCapture( { format: 'gif', workersPath: 'js/' } );
     capturer.start();
     let  downs = 0;
@@ -64,7 +60,7 @@ function init() {
             box = boxes[i];
             box.rotation.x += Math.sin((counter + i) / 120) / 90;
             box.rotation.y += Math.sin((counter + i) / 175) / 45;
-            box.rotation.z += Math.sin((counter + i) / 35) / 135;
+//            box.rotation.z += Math.sin((counter + i) / 35) / 135;
         }
 
         xRotDiff = boxes[0].rotation.x - boxes[frames - 1].rotation.x;
@@ -80,7 +76,8 @@ function init() {
             downs++;
         }
 
-        if (countdown > 0 && delayCounter-- == 0) {
+        delayCounter--;
+        if (countdown > 0 && delayCounter == 0) {
             delayCounter = delay;
 
             if (xDirection == 1) {
